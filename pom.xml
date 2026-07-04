@@ -35,12 +35,11 @@
             <muleVersion>${deployment.app.runtime}</muleVersion>
             <username>${anypoint.username}</username>
             <password>${anypoint.password}</password>
-            <applicationName>${project.artifactId}</applicationName>
+            <applicationName>cicd2</applicationName>
             <environment>${env}</environment>
             <region>${deployment.region}</region>
             <workers>${deployment.workers}</workers>
             <workerType>${deployment.workerType}</workerType>
-            <objectstoreV2>true</objectstoreV2>
             <properties>
                 <http.port>${http.port}</http.port>
                 <mule.env>${env}</mule.env>
