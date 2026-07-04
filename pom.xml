@@ -39,8 +39,8 @@
             <applicationName>cicd2</applicationName>
             <environment>${env}</environment>
             <target>Cloudhub-US-East-2</target>
-            <replicas>${deployment.app.workers}</replicas>
-            <vCores>${deployment.app.workerType}</vCores>
+            vCores>${vCores}</vCores>
+       		<replicas>${replicas}</replicas>
             <properties>
                 <http.port>${http.port}</http.port>
                 <mule.env>${env}</mule.env>
