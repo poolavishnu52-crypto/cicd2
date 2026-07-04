@@ -39,7 +39,7 @@
             <applicationName>cicd2</applicationName>
             <environment>${env}</environment>
             <target>Cloudhub-US-East-2</target>
-            vCores>${vCores}</vCores>
+            <vCores>${vCores}</vCores>
        		<replicas>${replicas}</replicas>
             <properties>
                 <http.port>${http.port}</http.port>
