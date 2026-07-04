@@ -38,7 +38,7 @@
             <applicationName>cicd2</applicationName>
             <environment>${env}</environment>
             <target>Cloudhub-US-East-2</target>
-            <workers>${deployment.workers}</workers>
+            <workers>${deployment.app.workers}</workers>
             <workerType>${deployment.workerType}</workerType>
             <properties>
                 <http.port>${http.port}</http.port>
