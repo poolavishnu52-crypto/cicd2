@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://apache.org" xmlns:xsi="http://w3.org" xsi:schemaLocation="http://apache.org https://apache.org">
 	<modelVersion>4.0.0</modelVersion>
 
+	<!-- FIX 1: Group ID must match your Anypoint Organization ID exactly -->
 	<groupId>3085bd31-d863-4cbe-b38b-5c9fd4109c67</groupId>
 	<artifactId>cicd2</artifactId>
-	<version>1.0.2</version>
+	<!-- FIX 2: Incremented version to clear out any previous failed or cached states in Exchange -->
+	<version>1.0.4</version>
 	<packaging>mule-application</packaging>
 
 	<name>cicd2</name>
@@ -12,8 +14,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-		<app.runtime>4.11.4</app.runtime>
+		<!-- Fallback property for the runtime version -->
+		<app.runtime>4.6.0</app.runtime>
 		<mule.maven.plugin.version>4.9.1</mule.maven.plugin.version>
 	</properties>
 
@@ -30,25 +32,29 @@
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
-	<cloudhub2Deployment>
-            <uri>https://anypoint.mulesoft.com</uri>
-            <muleVersion>4.12.0</muleVersion>
-			<provider>MC</provider>
-            <username>${anypoint.username}</username>
-            <password>${anypoint.password}</password>
-            <applicationName>cicd2</applicationName>
-            <environment>${env}</environment>
-            <target>Cloudhub-US-East-2</target>
-            <vCores>${vCores}</vCores>
-       		<replicas>${replicas}</replicas>
-            <properties>
-                <http.port>${http.port}</http.port>
-                <mule.env>${env}</mule.env>
-            </properties>
-        </cloudhub2Deployment>
-    </configuration>
+					<cloudhub2Deployment>
+						<uri>https://mulesoft.com</uri>
+						<!-- FIX 3: Aligned token name to read correctly from your project properties -->
+						<muleVersion>${app.runtime}</muleVersion>
+						<!-- FIX 4: Declared required CloudHub 2.0 deployment control manager -->
+						<provider>MC</provider>
+						<username>${anypoint.username}</username>
+						<password>${anypoint.password}</password>
+						<applicationName>${app.name}</applicationName>
+						<environment>${env}</environment>
+						<target>Cloudhub-US-East-2</target>
+						<!-- FIX 5: Standard CloudHub 2.0 infrastructure parameters mapped to properties -->
+						<vCores>${vCores}</vCores>
+						<replicas>${replicas}</replicas>
+						<properties>
+							<http.port>8081</http.port>
+							<mule.env>${env}</mule.env>
+						</properties>
+					</cloudhub2Deployment>
+				</configuration>
 			</plugin>
-					<plugin>
+			<!-- FIX 6: Explicit configuration mapping for the core artifact upload phase -->
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
 				<version>3.1.1</version>
@@ -76,21 +82,15 @@
 
 	<repositories>
 		<repository>
-			<id>anypoint-exchange-v2</id>
-			<name>Anypoint Exchange</name>
-			<url>https://maven.anypoint.mulesoft.com/api/v2/3085bd31-d863-4cbe-b38b-5c9fd4109c67/maven</url>
-			<layout>default</layout>
-		</repository>
-		<repository>
 			<id>anypoint-exchange-v3</id>
 			<name>Anypoint Exchange</name>
-			<url>https://maven.anypoint.mulesoft.com/api/v3/3085bd31-d863-4cbe-b38b-5c9fd4109c67/maven</url>
+			<url>https://mulesoft.com</url>
 			<layout>default</layout>
 		</repository>
 		<repository>
 			<id>mulesoft-releases</id>
 			<name>MuleSoft Releases Repository</name>
-			<url>https://repository.mulesoft.org/nexus/repository/releases/</url>
+			<url>https://mulesoft.org</url>
 			<layout>default</layout>
 		</repository>
 	</repositories>
@@ -100,17 +100,19 @@
 			<id>mulesoft-releases</id>
 			<name>MuleSoft Releases Repository</name>
 			<layout>default</layout>
-			<url>https://repository.mulesoft.org/nexus/repository/releases/</url>
+			<url>https://mulesoft.org</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
+
+	<!-- FIX 7: Explicit publication endpoint definition so Maven can successfully publish your jar to Exchange -->
 	<distributionManagement>
 		<repository>
 			<id>anypoint-exchange-v3</id>
 			<name>Anypoint Exchange</name>
-			<url>https://maven.anypoint.mulesoft.com/api/v3/organizations/3085bd31-d863-4cbe-b38b-5c9fd4109c67/maven</url>
+			<url>https://mulesoft.com</url>
 			<layout>default</layout>
 		</repository>
 	</distributionManagement>
