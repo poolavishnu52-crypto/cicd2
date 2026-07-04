@@ -1,0 +1,10 @@
+http:
+  port: "8086"
+log:
+  message: "welcome"
+deployment:
+  app:
+    runtime: "7.25.0"
+    region: "us-east-2"
+    workers: "1"
+    workerType: "MICRO"

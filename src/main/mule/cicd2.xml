@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="be3f5625-82d9-4ad3-b30b-99f17c599428" >
+		<http:listener-connection host="0.0.0.0" port="${http.port}" />
+	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="b9b09a09-f596-4247-b0e5-b165437a86ba" file="myconfig-Dev.yaml" />
+	<flow name="cicd2Flow" doc:id="4bbdc490-e016-43c4-a1e1-e3d7d2798d56" >
+		<http:listener doc:name="Listener" doc:id="cd4cc817-f36c-4034-b967-41fc7ea36ba1" config-ref="HTTP_Listener_config" path="/arthimetic"/>
+		<logger level="INFO" doc:name="Logger" doc:id="6dafe9ff-ce7d-4b73-94a0-e8e1b76599cf" message="---welcome to artimetic---"/>
+		<set-variable value="#[attributes.queryParams.num1]" doc:name="num1" doc:id="135fe3b1-381f-4d02-902c-ed8dd3b4608d" variableName="num1"/>
+		<set-variable value="#[attributes.queryParams.num2]" doc:name="num2" doc:id="e09b4099-fd85-465e-a1be-7c7ffa1e0de6" variableName="num2"/>
+		<ee:transform doc:name="Transform Message" doc:id="1b323011-9ece-4275-aee9-d807a1b9551f" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message": p('log.message'),
+	"addition": (vars.num1 as Number + vars.num2 as Number),
+	"Subtraction": (vars.num1 as Number - vars.num2 as Number),
+	"Multiplication": (vars.num1 as Number * vars.num2 as Number),
+	"Division": (vars.num1 as Number / vars.num2 as Number)
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="bb666ab3-81a3-406a-8256-70e71b3311b5" message="--sucessfully completed---"/>
+	</flow>
+</mule>
