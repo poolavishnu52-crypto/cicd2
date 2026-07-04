@@ -7,4 +7,4 @@ deployment:
     runtime: "7.25.0"
     region: "Cloudhub-US-East-2"
     workers: "1"
-    workerType: "MICRO"
+    workerType: "vCores"
