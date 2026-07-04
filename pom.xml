@@ -40,7 +40,7 @@
             <environment>${env}</environment>
             <target>Cloudhub-US-East-2</target>
             <replicas>${deployment.app.workers}</replicas>
-            <vCores>${deployment.workerType}</vCores>
+            <vCores>${deployment.app.workerType}</vCores>
             <properties>
                 <http.port>${http.port}</http.port>
                 <mule.env>${env}</mule.env>
