@@ -37,7 +37,7 @@
             <password>${anypoint.password}</password>
             <applicationName>cicd2</applicationName>
             <environment>${env}</environment>
-            <region>Cloudhub-US-East-2</region>
+            <target>Cloudhub-US-East-2</target>
             <workers>${deployment.workers}</workers>
             <workerType>${deployment.workerType}</workerType>
             <properties>
